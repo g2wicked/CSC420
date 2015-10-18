@@ -7,8 +7,10 @@ imTest = imread('test.png');
 imgTest = rgb2gray(imTest);
 
 % get frames and descriptors for images
-[fRef, dRef, lRef] = sift(double(imgRef/256));
-[fTest, dTest, lTest] = sift(double(imgTest/256));
+% [fRef, dRef, lRef] = sift(double(imgRef/256));
+% [fTest, dTest, lTest] = sift(double(imgTest/256));
+[fRef, dRef, lRef] = sift(im2double(imgRef));
+[fTest, dTest, lTest] = sift(im2double(imgTest));
 
 % find matches
 d = dist2(dRef.', dTest.');
