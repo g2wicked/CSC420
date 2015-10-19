@@ -1,4 +1,5 @@
 % SIFT features for reference.png and test.png
+function out = a2q2b(useIm2)
 addpath('./sift');
 % read images and grayscale
 imRef = imread('reference.png');
@@ -7,10 +8,13 @@ imTest = imread('test.png');
 imgTest = rgb2gray(imTest);
 
 % get frames and descriptors for images
-% [fRef, dRef, lRef] = sift(double(imgRef/256));
-% [fTest, dTest, lTest] = sift(double(imgTest/256));
+if(useIm2 == true)
 [fRef, dRef, lRef] = sift(im2double(imgRef));
 [fTest, dTest, lTest] = sift(im2double(imgTest));
+else
+[fRef, dRef, lRef] = sift(double(imgRef/256));
+[fTest, dTest, lTest] = sift(double(imgTest/256));
+end
 
 % find matches
 d = dist2(dRef.', dTest.');
@@ -43,6 +47,7 @@ end
 
 indices = find(top > 0);
 
+% Plot images
 imshow(imRef);
 hold on;
 mr1 = plotsiftframe(fRef(:, indices(1):indices(1)));
@@ -62,3 +67,7 @@ set(mt2,'color','g','linewidth',1) ;
 mt3 = plotsiftframe(fTest(:, top(indices(3)):top(indices(3))));
 set(mt3,'color','b','linewidth',1) ;
 hold off;
+
+% Return map with frames and key feature indices
+out = containers.Map({'fRef', 'fTest', 'rInd', 'tInd'}, {fRef, fTest, [indices(1), indices(2), indices(3)],[top(indices(1)), top(indices(2)), top(indices(3))]})
+end
