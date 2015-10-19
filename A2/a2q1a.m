@@ -12,21 +12,20 @@ Ix2 = Gx.^2;
 Iy2 = Gy.^2;
 Ixy = Gx.*Gy;
 
-% Compute M
+% Compute M = [Ix2g, Ixyg; Ixyg, Iy2g];
 gaussFilt = fspecial('gaussian');
 Ix2g = conv2(Ix2, gaussFilt, 'same');
 Iy2g = conv2(Iy2, gaussFilt, 'same');
 Ixyg = conv2(Ixy, gaussFilt, 'same');
 
-% M = [Ix2g, Ixyg; Ixyg, Iy2g];
-% Compute R = det(M) - alpha trace(M)^2
+% Compute R = det(M) - alpha*trace(M)^2
 alpha = 0.04; % alpha is usually 0.04 to 0.06
 Rmax = 0;
 [h, w] = size(img);
 R = zeros(h, w);
 
 Mdet = Ix2g.*Iy2g - Ixyg.^2; % det(M)
-Mtrace = Ix2g + Iy2g;
+Mtrace = Ix2g + Iy2g; % trace(M) = sum of diag
 R = Mdet-alpha*((Mtrace).^2);
 Rmax = max(max(R));
 
@@ -49,7 +48,9 @@ for i = 1:h
 					break
 				end
 			end
-			Res(i,j) = 1;
+			if isLocalMax == true
+				Res(i,j) = 1;
+			end
 		end
 	end
 end
@@ -58,5 +59,4 @@ end
 imshow(img);
 hold on;
 plot(posr,posc,'r.');
-
 end
