@@ -32,7 +32,7 @@ Rmax = max(max(R));
 
 % Non-maximum suppression
 Res = zeros(h, w);
-thresh = Rmax*0.095;
+thresh = Rmax*0.028;
 for i = 1:h
 	for j = 1:w
 		% Keep if px is greater than thresh and surrounding px
@@ -53,6 +53,7 @@ for i = 1:h
 		end
 	end
 end
+
 [posc, posr] = find(Res == 1);
 imshow(img);
 hold on;
