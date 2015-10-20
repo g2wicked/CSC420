@@ -33,26 +33,26 @@ Rmax = max(max(R));
 Res = zeros(h, w);
 thresh = Rmax*0.028;
 for i = 1:h
-	for j = 1:w
-		% Keep if px is greater than thresh and surrounding px
-		if R(i,j) > thresh
-			isLocalMax = true;
-			for n = i-1:i+1
-				for m = j-1:j+1
-					if R(n, m) > R(i, j)
-						isLocalMax = false;
-						break
-					end
-				end
-				if isLocalMax == false
-					break
-				end
-			end
-			if isLocalMax == true
-				Res(i,j) = 1;
-			end
-		end
-	end
+    for j = 1:w
+        % Keep if px is greater than thresh and surrounding px
+        if R(i,j) > thresh
+            isLocalMax = true;
+            for n = i-1:i+1
+                for m = j-1:j+1
+                    if R(n, m) > R(i, j)
+                        isLocalMax = false;
+                        break
+                    end
+                end
+                if isLocalMax == false
+                    break
+                end
+            end
+            if isLocalMax == true
+                Res(i,j) = 1;
+            end
+        end
+    end
 end
 
 [posc, posr] = find(Res == 1);

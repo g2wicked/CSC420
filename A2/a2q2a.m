@@ -9,11 +9,11 @@ imgTest = rgb2gray(imTest);
 
 % get frames and descriptors for images
 if(useIm2 == true)
-[fRef, dRef, lRef] = sift(im2double(imgRef));
-[fTest, dTest, lTest] = sift(im2double(imgTest));
+    [fRef, dRef, lRef] = sift(im2double(imgRef));
+    [fTest, dTest, lTest] = sift(im2double(imgTest));
 else
-[fRef, dRef, lRef] = sift(double(imgRef/256));
-[fTest, dTest, lTest] = sift(double(imgTest/256));
+    [fRef, dRef, lRef] = sift(double(imgRef/256));
+    [fTest, dTest, lTest] = sift(double(imgTest/256));
 end
 
 % Plot images
@@ -21,9 +21,11 @@ imshow(imRef);
 hold on;
 sfRef = plotsiftframe(fRef(:,1:100));
 set(sfRef,'color','r','linewidth',1);
+hold off;
 
 imshow(imTest);
 hold on;
 sfRef = plotsiftframe(fTest(:,1:100));
 set(sfRef,'color','y','linewidth',1) ;
+hold off;
 end
