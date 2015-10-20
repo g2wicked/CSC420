@@ -1,5 +1,7 @@
 % Solve affine transformation between features using top 3 corresp. from a2q2b
-keypoints = top3(false);
+function out = a2q2c(useIm2)
+% get top 3 correspondences from a2q2b;
+keypoints = a2q2b(useIm2);
 
 % entire reference sets
 fRef = keypoints('fRef');
@@ -23,6 +25,5 @@ end
 
 P_prime = [pTest(1,1); pTest(2,1); pTest(1,2); pTest(2,2); pTest(1,3); pTest(2,3)];
 
-a = inv(P)*P_prime;
-
-output = a;
+out = inv(P)*P_prime;
+end
